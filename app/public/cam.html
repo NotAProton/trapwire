@@ -56,14 +56,31 @@
 
           data.forEach((log) => {
             const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${log.time}</td>
-                <td>${log.ip}</td>
-                <td>${log.ua}</td>
-                <td>${log.referrer}</td>
-                <td>${log.wire}</td>
-                <td>${log.dest}</td>
-            `;
+
+            const timeCell = document.createElement("td");
+            timeCell.textContent = log.time;
+            row.appendChild(timeCell);
+
+            const ipCell = document.createElement("td");
+            ipCell.textContent = log.ip;
+            row.appendChild(ipCell);
+
+            const uaCell = document.createElement("td");
+            uaCell.textContent = log.ua;
+            row.appendChild(uaCell);
+
+            const referrerCell = document.createElement("td");
+            referrerCell.textContent = log.referrer;
+            row.appendChild(referrerCell);
+
+            const wireCell = document.createElement("td");
+            wireCell.textContent = log.wire;
+            row.appendChild(wireCell);
+
+            const destCell = document.createElement("td");
+            destCell.textContent = log.dest;
+            row.appendChild(destCell);
+
             tbody.appendChild(row);
           });
         })
