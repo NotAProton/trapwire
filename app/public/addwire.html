@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Trapwire</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #171717;
+        color: #fdfdfd;
+        margin-top: 7%;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+      #myModal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      #myModal-content {
+        background-color: #044b04;
+        margin: 15% auto;
+        border: 1px solid #0f8300;
+        width: 80%;
+      }
+      button {
+        background-color: #15f11d;
+        font-size: 20px;
+        color: rgb(3, 56, 19);
+        padding: 5px 8px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        width: fit-content;
+      }
+      input[type="text"] {
+        width: 30%;
+        color: #fdfdfd;
+        font-size: 20px;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        border: 1px solid #494949;
+        background-color: #222222;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Add new trapwire</h2>
+    <input type="text" id="wire" placeholder="Wire" />
+    <input type="text" id="dest" placeholder="Redirect to URL" />
+    <button onclick="submitForm()">Submit</button>
+
+    <div id="myModal">
+      <div id="myModal-content">
+        <span class="close">&times;</span>
+        <p>Success!</p>
+      </div>
+    </div>
+
+    <script>
+      //fill wire box with random 5 letter and number string
+      document.getElementById("wire").value = Math.random()
+        .toString(36)
+        .substring(2, 7);
+      function submitForm() {
+        var wire = document.getElementById("wire").value;
+        var dest = document.getElementById("dest").value;
+        fetch("/api/addwire", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: localStorage.getItem("password"),
+          },
+          body: "wire=" + wire + "&dest=" + dest,
+        })
+          .then((response) => {
+            if (response.ok) {
+              showModal();
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      function showModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+        let link =
+          "https://tw.notaproton.me/w/" + document.getElementById("wire").value;
+        document.getElementById(
+          "myModal-content"
+        ).innerHTML += `<a href='${link}'>${link}</a>`;
+      }
+    </script>
+
+    <script>
+      window.onload = function () {
+        var password = localStorage.getItem("password");
+        if (!password) {
+          window.location.href = "auth";
+        }
+      };
+    </script>
+  </body>
+</html>

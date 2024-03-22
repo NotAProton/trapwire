@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logs</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #333;
+        color: #f2f2f2;
+        margin-top: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="logsTable">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>IP</th>
+          <th>User Agent</th>
+          <th>Referrer</th>
+          <th>Wire</th>
+          <th>Destination</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      fetch("/api/getlogs", {
+        method: "POST",
+        headers: {
+          Authorization: localStorage.getItem("password"),
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const logsTable = document.getElementById("logsTable");
+          const tbody = logsTable.querySelector("tbody");
+
+          data.forEach((log) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${log.time}</td>
+                <td>${log.ip}</td>
+                <td>${log.ua}</td>
+                <td>${log.referrer}</td>
+                <td>${log.wire}</td>
+                <td>${log.dest}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch((error) => console.error("Error fetching logs:", error));
+    </script>
+  </body>
+</html>

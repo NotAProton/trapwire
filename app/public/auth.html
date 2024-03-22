@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #171717;
+        color: #fdfdfd;
+        margin-top: 10%;
+        font-size: 20px;
+      }
+      input[type="password"] {
+        font-size: 20px;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      button {
+        font-size: 20px;
+        background-color: #0b640e;
+        color: white;
+        padding: 10px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="authForm" onsubmit="submitForm(event)">
+      <label for="password">Enter Password:</label><br />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+      /><br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+        var password = document.getElementById("password").value;
+        localStorage.setItem("password", password);
+        window.location.href = "addwire";
+      }
+    </script>
+  </body>
+</html>

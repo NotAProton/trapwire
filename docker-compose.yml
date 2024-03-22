@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234f
+      MYSQL_DATABASE: madb
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+    volumes:
+      - database_mysql:/var/lib/mysql
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  goserver:
+    build: .
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      - MYSQL_USER=your_username
+      - MYSQL_PASSWORD=your_password
+      - AUTH=your_password
+
+  caddy:
+    image: caddy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: "1234"
+volumes:
+  database_mysql:
