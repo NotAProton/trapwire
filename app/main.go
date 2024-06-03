@@ -19,6 +19,12 @@ func main() {
 	if os.Getenv("MYSQL_PASSWORD") == "" {
 		panic("MYSQL_PASSWORD is not set")
 	}
+	if os.Getenv("AUTH") == "" {
+		panic("AUTH is not set")
+	}
+	if os.Getenv("TOKEN") == "" {
+		panic("TOKEN is not set")
+	}
 
 	fmt.Println("Connecting to", connctionString)
 	var err error
@@ -43,6 +49,7 @@ func main() {
 	e.File("/addwire", "public/addwire.html")
 	e.File("/auth", "public/auth.html")
 	e.File("/cam", "public/cam.html")
+	e.POST("/api/directlog", directLog)
 
 	e.Logger.Fatal(e.Start(":3000"))
 }

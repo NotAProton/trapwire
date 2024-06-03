@@ -14,6 +14,7 @@ func checkAuth(c echo.Context) bool {
 	return c.Request().Header.Get("Authorization") == os.Getenv("AUTH")
 }
 
+
 func redir(c echo.Context) error {
 	t := time.Now().In(loc).Format("15:04:05")
 	dest, found := getDest(c.Param("wire"))
@@ -45,4 +46,18 @@ func getLogs(c echo.Context) error {
 		return c.NoContent(http.StatusUnauthorized)
 	}
 	return c.JSON(http.StatusOK, getLogsData())
+}
+
+func directLog(c echo.Context) error {
+	if c.FormValue("token") != os.Getenv("TOKEN") {
+		return c.NoContent(http.StatusUnauthorized)
+	}
+	t := time.Now().In(loc).Format("15:04:05")
+	ip := c.FormValue("ip")
+	ua := c.FormValue("ua")
+	ref := c.FormValue("ref")
+	wire := c.FormValue("wire")
+	dest := c.FormValue("dest")
+	insertLog(t, ip, ua, ref, wire, dest)
+	return c.NoContent(http.StatusOK)
 }
