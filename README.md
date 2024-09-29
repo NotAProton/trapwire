@@ -14,8 +14,8 @@
 
 ## Features
 - 🔗 **URL Shortening**: Create shortened links for easy sharing.
-- 🛡️ **Surveillance**: Track link access including IP, time visited, and user agents.
-- 🧑‍💻 **Cybersecurity**: Monitor for suspicious behavior and malicious access attempts.
+- 📸 **Surveillance**: Track link access including IP, time visited, and user agents.
+- 🛡️ **Cybersecurity**: Monitor for suspicious behavior and malicious access attempts.
 - 📊 **Analytics**: Gather real-time insights into traffic and user behavior.
 - 🐳 **Dockerized**: Simple setup and deployment with Docker.
 
