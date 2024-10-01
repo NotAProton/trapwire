@@ -36,5 +36,5 @@ To run Trapwire using Docker with your own database and reverse proxy setup:
 
 ```bash
 docker pull ghcr.io/notaproton/trapwire:latest
-docker run -p 8080:8080 trapwire
+docker run -p 3000:3000 -e MYSQL_USER=user -e MYSQL_PASSWORD=password -e AUTH=your_password -e TOKEN=hello ghcr.io/notaproton/trapwire
 ```
